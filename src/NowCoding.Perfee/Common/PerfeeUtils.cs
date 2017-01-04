@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Perfee.Entries;
+using NowCoding.Perfee.Entries;
 
-namespace Perfee.Common
+namespace NowCoding.Perfee.Common
 {
     public static class PerfeeUtils
     {

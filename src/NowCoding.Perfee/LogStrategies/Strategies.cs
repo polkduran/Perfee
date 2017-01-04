@@ -3,10 +3,10 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Perfee.Common;
-using Perfee.Entries;
+using NowCoding.Perfee.Common;
+using NowCoding.Perfee.Entries;
 
-namespace Perfee.LogStrategies
+namespace NowCoding.Perfee.LogStrategies
 {
     public interface IPerfeeLogStrategy : IDisposable
     {
@@ -86,8 +86,8 @@ namespace Perfee.LogStrategies
         private void LogGroupedEntry(StartEntry start, LogEntry logEntry, EndEntry end)
         {
             if (!_groupLogEntries.ContainsKey(start.Label)
-                && Common.Perfee.Configuration.FirstGroupEntryAsLogEntry
-                && logEntry.ElapsedTime < Common.Perfee.Configuration.LogElapsedTimeThreshold)
+                && Perfee.Configuration.FirstGroupEntryAsLogEntry
+                && logEntry.ElapsedTime < Perfee.Configuration.LogElapsedTimeThreshold)
             {
                 if (_keepAllEntries)
                 {
@@ -98,7 +98,7 @@ namespace Perfee.LogStrategies
             var groupLog = _groupLogEntries.GetOrAdd(start.Label, groupName => new GroupLogEntry(groupName));
             groupLog.Add(start, end);
 
-            if (groupLog.CumulTicks < Common.Perfee.Configuration.LogElapsedTimeThreshold.Ticks)
+            if (groupLog.CumulTicks < Perfee.Configuration.LogElapsedTimeThreshold.Ticks)
             {
                 return;
             }
@@ -111,7 +111,7 @@ namespace Perfee.LogStrategies
             {
                 _logEntries.Add(logEntry);
             }
-            if (logEntry.ElapsedTime < Common.Perfee.Configuration.LogElapsedTimeThreshold)
+            if (logEntry.ElapsedTime < Perfee.Configuration.LogElapsedTimeThreshold)
             {
                 PerfeeUtils.WriteLogs(logEntry.ToString());
             }
@@ -269,7 +269,7 @@ namespace Perfee.LogStrategies
                     {
                         groupLog = new GroupLogEntry(start.Label);
                         _groupLogEntries.Add(groupLog.GroupName, groupLog);
-                        if (Common.Perfee.Configuration.FirstGroupEntryAsLogEntry)
+                        if (Perfee.Configuration.FirstGroupEntryAsLogEntry)
                         {
                             _logEntries.Add(new LogEntry(start, end, start.Level));
                         }

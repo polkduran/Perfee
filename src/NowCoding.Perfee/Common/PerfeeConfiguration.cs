@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Perfee.LogStrategies;
+using NowCoding.Perfee.LogStrategies;
 
-namespace Perfee.Common
+namespace NowCoding.Perfee.Common
 {
     /// <summary>
     /// Perfee configuration.

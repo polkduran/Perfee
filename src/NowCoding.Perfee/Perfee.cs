@@ -1,6 +1,7 @@
 ﻿using System;
+using NowCoding.Perfee.Common;
 
-namespace Perfee.Common
+namespace NowCoding.Perfee
 {
     /// <summary>
     ///

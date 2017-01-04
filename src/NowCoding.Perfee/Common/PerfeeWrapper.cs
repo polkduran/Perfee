@@ -1,6 +1,6 @@
 using System;
 
-namespace Perfee.Common
+namespace NowCoding.Perfee.Common
 {
     internal class PerfeeWrapper : IDisposable
     {

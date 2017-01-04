@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using Perfee.Common;
+using NowCoding.Perfee.Common;
 
-namespace Perfee.Entries
+namespace NowCoding.Perfee.Entries
 {
     public struct StartEntry
     {
@@ -160,7 +160,7 @@ namespace Perfee.Entries
             var stdevTime = TimeSpan.FromTicks(Convert.ToInt64(stdevTicks));
 
             var log = $"[GROUP] {GroupName} -> took '{cumulTime:g}' with '{_n}' hits  mean[{meanTime:g}] stdev[{stdevTime:g}]";
-            if (Common.Perfee.Configuration.ShowGroupIndividualEntries)
+            if (Perfee.Configuration.ShowGroupIndividualEntries)
             {
                 log += $" entries[{_individualTimesStr}]";
             }

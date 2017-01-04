@@ -5,11 +5,11 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{11BF2545-E193-45A9-9E7B-D0B6729C93F8}</ProjectGuid>
+    <ProjectGuid>{BA57D414-D16C-4492-83D4-E74B7FC1E703}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Perfee</RootNamespace>
-    <AssemblyName>Perfee</AssemblyName>
+    <RootNamespace>NowCoding.Perfee</RootNamespace>
+    <AssemblyName>NowCoding.Perfee</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -39,14 +39,14 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entries\Entries.cs" />
-    <Compile Include="Common\PerfId.cs" />
-    <Compile Include="Common\Perfee.cs" />
+    <Compile Include="Perfee.cs" />
     <Compile Include="Common\PerfeeConfiguration.cs" />
     <Compile Include="Common\PerfeeUtils.cs" />
     <Compile Include="Common\PerfeeWrapper.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\PerfId.cs" />
+    <Compile Include="Entries\Entries.cs" />
     <Compile Include="LogStrategies\Strategies.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

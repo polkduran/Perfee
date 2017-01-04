@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Perfee.Common
+namespace NowCoding.Perfee.Common
 {
     /// <summary>
     /// Represents an id for a given operation being measured.
