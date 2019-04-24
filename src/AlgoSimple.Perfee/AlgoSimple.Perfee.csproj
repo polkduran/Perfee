@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <AssemblyName>AlgoSimple.Perfee</AssemblyName>
+    <Authors>Pablo F D</Authors>
+    <Company>AlgoSimple</Company>
+    <Description>Basic execution time measurement tool.
+Measure individual entries and grouped entries providing some statistics (mean, variance, std deviation...).</Description>
+    <PackageProjectUrl>https://github.com/polkduran/Perfee</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/polkduran/Perfee</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>.net time elapsed</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  
+</Project>

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NowCoding.Perfee", "src\NowCoding.Perfee\NowCoding.Perfee.csproj", "{BA57D414-D16C-4492-83D4-E74B7FC1E703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoSimple.Perfee", "src\AlgoSimple.Perfee\AlgoSimple.Perfee.csproj", "{BA57D414-D16C-4492-83D4-E74B7FC1E703}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoSimple.Perfee.Tests", "tests\AlgoSimple.Perfee.Tests\AlgoSimple.Perfee.Tests.csproj", "{3DB56EF7-BFCB-487B-83B2-4702FDA57DAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{BA57D414-D16C-4492-83D4-E74B7FC1E703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA57D414-D16C-4492-83D4-E74B7FC1E703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA57D414-D16C-4492-83D4-E74B7FC1E703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB56EF7-BFCB-487B-83B2-4702FDA57DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB56EF7-BFCB-487B-83B2-4702FDA57DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB56EF7-BFCB-487B-83B2-4702FDA57DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB56EF7-BFCB-487B-83B2-4702FDA57DAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4D90F8CE-EAA5-43BF-98C0-BD636ABBE958}
 	EndGlobalSection
 EndGlobal
