@@ -13,7 +13,8 @@ Measure individual entries and grouped entries providing some statistics (mean, 
     <RepositoryType>git</RepositoryType>
     <PackageTags>.net time elapsed measurent</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Order grouped entries by key.</PackageReleaseNotes>
   </PropertyGroup>
   
 </Project>

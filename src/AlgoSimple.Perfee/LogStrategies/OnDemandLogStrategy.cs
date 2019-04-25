@@ -19,7 +19,7 @@ namespace AlgoSimple.Perfee.LogStrategies
         private IProducerConsumerCollection<EndEntry> _endEntries = BuildConcurrentCollection<EndEntry>();
 
         private SortedSet<LogEntry> _logEntries = new SortedSet<LogEntry>();
-        private Dictionary<string, GroupLogEntry> _groupLogEntries = new Dictionary<string, GroupLogEntry>();
+        private SortedDictionary<string, GroupLogEntry> _groupLogEntries = new SortedDictionary<string, GroupLogEntry>();
 
         private readonly object _syncReadRoot = new object();
 
