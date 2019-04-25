@@ -22,11 +22,11 @@ namespace AlgoSimple.Perfee.Common
 
             if (singleOpenEntries > 0)
             {
-                logBuilder.Append("{singleOpenEntries} single entries still open. ");
+                logBuilder.Append($"{singleOpenEntries} single entries still open. ");
             }
             if (groupedOpenEntries > 0)
             {
-                logBuilder.Append("{groupedOpenEntries} group entries still open. ");
+                logBuilder.Append($"{groupedOpenEntries} group entries still open. ");
             }
             logBuilder.AppendLine();
 
