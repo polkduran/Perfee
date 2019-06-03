@@ -20,5 +20,9 @@ Measure individual entries and grouped entries providing some statistics (mean, 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>AlgoSimple.Perfee.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
   
 </Project>

@@ -235,6 +235,12 @@
             <param name="groupName">The group name.</param>
             <returns>An id used by the <see cref="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)"/> method.</returns>
         </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.DiscardMeasure(AlgoSimple.Perfee.Common.PerfId)">
+            <summary>
+            Cancels the entry associated to the given id as long as the entry has not been closed yet.
+            </summary>
+            <param name="id">A measure point id provided by <see cref="M:AlgoSimple.Perfee.Perfee.StartPoint(System.String)"/> or <see cref="M:AlgoSimple.Perfee.Perfee.StartGroupPoint(System.String)"/>.</param>
+        </member>
         <member name="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)">
             <summary>
             Closes an opened entry (individual or grouped).

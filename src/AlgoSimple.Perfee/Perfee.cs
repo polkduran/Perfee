@@ -103,6 +103,15 @@ namespace AlgoSimple.Perfee
         }
 
         /// <summary>
+        /// Cancels the entry associated to the given id as long as the entry has not been closed yet.
+        /// </summary>
+        /// <param name="id">A measure point id provided by <see cref="StartPoint"/> or <see cref="StartGroupPoint"/>.</param>
+        public static void DiscardMeasure(PerfId id)
+        {
+            Configuration.LogStrategy.CancelEntry(id);
+        }
+
+        /// <summary>
         /// Closes an opened entry (individual or grouped).
         /// </summary>
         /// <param name="id">The id generated after calling <see cref="StartPoint"/> or <see cref="StartGroupPoint"/>.</param>

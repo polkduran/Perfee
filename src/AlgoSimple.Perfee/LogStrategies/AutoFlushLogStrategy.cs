@@ -71,6 +71,11 @@ namespace AlgoSimple.Perfee.LogStrategies
             }
         }
 
+        public void CancelEntry(PerfId perfId)
+        {
+            _startEntries.TryRemove(perfId, out _);
+        }
+
         private void LogGroupedEntry(StartEntry start, LogEntry logEntry, EndEntry end)
         {
             if (!_groupLogEntries.ContainsKey(start.Label)

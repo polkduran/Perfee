@@ -9,6 +9,8 @@ namespace AlgoSimple.Perfee.LogStrategies
 
         void CloseEntry(PerfId perfId);
 
+        void CancelEntry(PerfId perfId);
+
         string GetLogs();
 
         void Reset();

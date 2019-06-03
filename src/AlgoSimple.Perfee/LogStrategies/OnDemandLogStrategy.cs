@@ -10,13 +10,7 @@ namespace AlgoSimple.Perfee.LogStrategies
 {
     public class OnDemandLogStrategy : IPerfeeLogStrategy
     {
-        private static IProducerConsumerCollection<T> BuildConcurrentCollection<T>()
-        {
-            return new ConcurrentBag<T>();
-        }
-
-        private IProducerConsumerCollection<StartEntry> _startEntries = BuildConcurrentCollection<StartEntry>();
-        private IProducerConsumerCollection<EndEntry> _endEntries = BuildConcurrentCollection<EndEntry>();
+        private ConcurrentDictionary<PerfId, (StartEntry start, EndEntry? end)> _entries = new ConcurrentDictionary<PerfId, (StartEntry, EndEntry?)>();
 
         private SortedSet<LogEntry> _logEntries = new SortedSet<LogEntry>();
         private SortedDictionary<string, GroupLogEntry> _groupLogEntries = new SortedDictionary<string, GroupLogEntry>();
@@ -39,8 +33,7 @@ namespace AlgoSimple.Perfee.LogStrategies
             {
                 lock (_syncReadRoot)
                 {
-                    _startEntries = null;
-                    _endEntries = null;
+                    _entries = null;
                     _logEntries = null;
                     _groupLogEntries = null;
                 }
@@ -58,14 +51,23 @@ namespace AlgoSimple.Perfee.LogStrategies
             // naive implementation of nested entries
             var level = Interlocked.Increment(ref _level);
             var entry = new StartEntry(label, isGroupEntry, level);
-            _startEntries.TryAdd(entry);
+
+            _entries.TryAdd(entry.Id, (entry, null));
             return entry.Id;
         }
 
         public void CloseEntry(PerfId perfId)
         {
             Interlocked.Decrement(ref _level);
-            _endEntries.TryAdd(new EndEntry(perfId));
+            if (_entries.TryGetValue(perfId, out var entryPair))
+            {
+                _entries.TryUpdate(perfId, (entryPair.Item1, new EndEntry(perfId)), entryPair);
+            }
+        }
+
+        public void CancelEntry(PerfId perfId)
+        {
+            _entries.TryRemove(perfId, out _);
         }
 
         public string GetLogs()
@@ -74,7 +76,9 @@ namespace AlgoSimple.Perfee.LogStrategies
             {
                 var start = DateTime.UtcNow;
                 UpdateLogEntries();
-                return PerfeeUtils.BuildLogs(_startEntries, start, _logEntries, _groupLogEntries.Values);
+
+                var openEntries = _entries.Values.Select(t => t.start).ToArray();
+                return PerfeeUtils.BuildLogs(openEntries, start, _logEntries, _groupLogEntries.Values);
             }
         }
 
@@ -89,29 +93,18 @@ namespace AlgoSimple.Perfee.LogStrategies
 
         private void UpdateLogEntries()
         {
-            StartEntry[] startEntries;
-            {
-                var tmp = _startEntries;
-                _startEntries = BuildConcurrentCollection<StartEntry>();
-                startEntries = tmp.ToArray();
-            }
-            Dictionary<PerfId, EndEntry> endEntries;
-            {
-                var tmp = _endEntries;
-                _endEntries = BuildConcurrentCollection<EndEntry>();
-                endEntries = tmp.ToArray().ToDictionary(e => e.Id, e => e);
-            }
+            var completedEntries = _entries
+                                        .Where(kv => kv.Value.end != null)
+                                        .Select(kv => kv.Key);
 
-            for (var i = 0; i < startEntries.Length; i++)
+            foreach (var id in completedEntries)
             {
-                var start = startEntries[i];
-                if (!endEntries.TryGetValue(start.Id, out var end))
+                if (!_entries.TryRemove(id, out var t))
                 {
-                    // not closed yet, put it back
-                    _startEntries.TryAdd(start);
                     continue;
                 }
 
+                var (start, end) = (t.start, t.end.Value);
                 if (start.IsGroupEntry)
                 {
                     if (!_groupLogEntries.TryGetValue(start.Label, out var groupLog))
