@@ -1,0 +1,303 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AlgoSimple.Perfee</name>
+    </assembly>
+    <members>
+        <member name="T:AlgoSimple.Perfee.Common.PerfeeConfiguration">
+            <summary>
+            Perfee configuration.
+            </summary>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Common.PerfeeConfiguration.LogElapsedTimeThreshold">
+            <summary>
+            Gets or sets a value indicating whether or not display individual elapsed times for grouped entries.
+            The default value is false.
+            </summary>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Common.PerfeeConfiguration.ShowGroupIndividualEntries">
+            <summary>
+            Gets or sets a value indicating whether or not display individual elapsed times for grouped entries.
+            The default value is false.
+            </summary>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Common.PerfeeConfiguration.FirstGroupEntryAsLogEntry">
+            <summary>
+            Gets or sets a value indicating whether the first group entry must be treated as a standalone log entry too.
+            </summary>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.SetLogElapsedTimeThreshold(System.TimeSpan)">
+            <summary>
+            Sets a threshold to filter the log entries with.
+            </summary>
+            <param name="elapsedTimeThreshold">Use TimeSpan.Zero to avoid filtering log entries.</param>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.SetShowGroupIndividualEntries(System.Boolean)">
+            <summary>
+            Sets a value indicating whether or not display individual elapsed times for grouped entries
+            </summary>
+            <param name="showGroupIndividualEntries">The default value is false.</param>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.SetFirstGroupEntryAsLogEntry(System.Boolean)">
+            <summary>
+            Sets a value indicating whether the first group entry must be treated as a standalone log entry too.
+            </summary>
+            <param name="firstGroupEntryAsLogEntry">The default value is true.</param>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.UseStrategy(AlgoSimple.Perfee.LogStrategies.IPerfeeLogStrategy)">
+            <summary>
+            Defines the log stragegy.
+            </summary>
+            <param name="logStrategy">The strategy.</param>
+            <returns>The current isntance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.UsAutoFlushOnlyStrategy">
+            <summary>
+            Defines an autoflush log strategy.
+            Each time an entry is added it is flushed.
+            Entries are not kept.
+            </summary>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.UseAutoFlushAndAggregatedOnDemandStrategy">
+            <summary>
+            Defines an autoflush log strategy that keeps a trace of all the log entries.
+            </summary>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.UseOnDemandOnlyStrategy">
+            <summary>
+            Defines an on demand strategy for logs, log entries are not autoflushed.
+            </summary>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.AddLogger(System.Action{System.String})">
+            <summary>
+            Adds a logger that is called when flushing or demanding the log string representation.
+            </summary>
+            <param name="logger">Not null delegate.</param>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfeeConfiguration.ClearLoggers">
+            <summary>
+            Clears the registered loggers.
+            </summary>
+            <returns>The current instance.</returns>
+        </member>
+        <member name="T:AlgoSimple.Perfee.Common.PerfId">
+            <summary>
+            Represents an id for a given operation being measured.
+            </summary>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfId.Equals(AlgoSimple.Perfee.Common.PerfId)">
+            <summary>
+            Eqeals
+            </summary>
+            <param name="other">The other</param>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfId.Equals(System.Object)">
+            <summary>
+            Equals
+            </summary>
+            <param name="obj">The other.</param>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Common.PerfId.GetHashCode">
+            <summary>
+            Gets the hash
+            </summary>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Entries.LogEntry.GetHashCode">
+            <summary>
+            the hash code
+            </summary>
+            <returns>the hash</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Entries.LogEntry.Equals(System.Object)">
+            <summary>
+            Equals
+            </summary>
+            <param name="obj">the other</param>
+            <returns>yes or not</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Entries.LogEntry.Equals(AlgoSimple.Perfee.Entries.LogEntry)">
+            <summary>
+            Equals
+            </summary>
+            <param name="other">the other</param>
+            <returns>yes or not</returns>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Entries.StartEntry.CreationTimestamp">
+            <summary>
+            In ticks
+            </summary>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Entries.StartEntry.Label">
+            <summary>
+            The entry message for a <see cref="P:AlgoSimple.Perfee.Entries.StartEntry.IsGroupEntry"/> entry or the group name.
+            </summary>
+        </member>
+        <member name="P:AlgoSimple.Perfee.Entries.StartEntry.IsGroupEntry">
+            <summary>
+            Whether this entry belongs to a group or not.
+            </summary>
+        </member>
+        <member name="T:AlgoSimple.Perfee.Perfee">
+             <summary>
+            
+             Measures the time consumed on a defined code block.
+             Entries may be measured in a SINGLE or in a GROUPED way.
+             Grouped entries produce indicators as: total time, mean time and the standard deviation.
+            
+             Measuring an operation time
+             ===========================
+            
+             Withing an using block:
+             <code>
+                 // Single entry time measurement
+                 using (Perfee.Measure("operationName"))
+                 {
+                     [...] some code here [...]
+                 }
+            
+                 // Time measurement by grouped entries
+                 using (Perfee.MeasureGroup("groupName"))
+                 {
+                     [...] some code here [...]
+                 }
+             </code>
+            
+            
+             OR handling manually the start and end measurement points:
+             <code>
+                 // Single entry time measurement
+                 var p = Perfee.StartPoint("operationName");
+                 [...] some code here [...]
+                 Perfee.EndPoint(p);
+            
+                 // Time measurement by grouped entries
+                 var p = Perfee.StartGroupPoint("groupName");
+                 [...] some code here [...]
+                 Perfee.EndPoint(p);
+             </code>
+            
+            
+             OR passing an Action or Fun{T} delegate:
+             <code>
+                 // Single entry time measurement
+                 Perfee.Measure("operationName", () => [...] some code here [...]);
+            
+                 // Time measurement by grouped entries retrieving the delegate result
+                 var res = Perfee.MeasureGroup("groupName", () => [...] some code here [...]);
+             </code>
+            
+             Retrieving the measured time logs:
+             <code>
+                 var logs = Perfee.GetLogs();
+             </code>
+            
+             Configuration:
+             ==============
+             Perfee.Configuration.LogElapsedTimeThreshold:TimeSpan
+             The threshold under which an entry is not logged (but it is saved), the total time for grouped entries.
+             The default value (TimeSpan.Zero) logs every entry.
+            
+             Perfee.Configuration.ShowGroupIndividualEntries:bool
+             Whether or not display individual elapsed times for grouped entries.
+             The default value is false.
+            
+             Loggers
+             =======
+             Add a logger callback, eg. Perfee.Configuration.AddLogger(Console.WriteLine);
+            
+             Log strategies
+             ==============
+              - Perfee.Configuration.UseOnDemandOnlyStrategy(): he default log strategy is "logs on demand", logs are only written when requested.
+              - Perfee.Configuration.UsAutoFlushOnlyStrategy(): auto flushes each time a log is created, does not keep a trace of logs already flushed.
+              - Perfee.Configuration.UseAutoFlushAndAggregatedOnDemandStrategy(): auto flushes and keeps trace of all logs to be displayed on demand.
+             </summary>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.StartPoint(System.String)">
+            <summary>
+            Starts an individual time measurement point.
+            Needs to be manually closed calling <see cref="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)"/>.
+            </summary>
+            <param name="message">The log message.</param>
+            <returns>An id used by the <see cref="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)"/> method.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.StartGroupPoint(System.String)">
+            <summary>
+            Starts a time measurement point for an entry belonging to a group.
+            Needs to be manually closed calling <see cref="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)"/>.
+            </summary>
+            <param name="groupName">The group name.</param>
+            <returns>An id used by the <see cref="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)"/> method.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.EndPoint(AlgoSimple.Perfee.Common.PerfId)">
+            <summary>
+            Closes an opened entry (individual or grouped).
+            </summary>
+            <param name="id">The id generated after calling <see cref="M:AlgoSimple.Perfee.Perfee.StartPoint(System.String)"/> or <see cref="M:AlgoSimple.Perfee.Perfee.StartGroupPoint(System.String)"/>.</param>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.GetLogs">
+            <summary>
+            Builds and returns all the individual and grouped entries logs.
+            </summary>
+            <returns>string representing all the individual and grouped entries</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.Reset">
+            <summary>
+            Clears the existing logs.
+            Do not clean opened entries.
+            </summary>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.Measure(System.String,System.Action)">
+            <summary>
+            Measures the elapsed time consumed by the given <paramref name="action"/>.
+            </summary>
+            <param name="message">The log message.</param>
+            <param name="action">The delegate to be executed.</param>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.Measure``1(System.String,System.Func{``0})">
+            <summary>
+            Measures the elapsed time consumed by the given <paramref name="fun"/> delegate and returns its result.
+            </summary>
+            <typeparam name="T">The <paramref name="fun"/> return type.</typeparam>
+            <param name="message">The log message.</param>
+            <param name="fun">The delegate to be executed.</param>
+            <returns>The result after the delegate execution.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.MeasureGroup(System.String,System.Action)">
+            <summary>
+            Measures the elapsed time consumed by the given <paramref name="action"/> for a given entry group.
+            </summary>
+            <param name="groupName">The group name.</param>
+            <param name="action">The delegate to be executed.</param>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.MeasureGroup``1(System.String,System.Func{``0})">
+            <summary>
+            Measures the elapsed time consumed by the given <paramref name="fun"/> delegate and returns its result for a given entry group.
+            </summary>
+            <typeparam name="T">The <paramref name="fun"/> return type.</typeparam>
+            <param name="groupName">The group name.</param>
+            <param name="fun">The delegate to be executed.</param>
+            <returns>The result after the delegate execution.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.Measure(System.String)">
+            <summary>
+            Starts an individual entry which be closed after the calling <see cref="M:System.IDisposable.Dispose"/> on the returned instance.
+            </summary>
+            <param name="message">The log message.</param>
+            <returns>A disposable instance that ends the time measure when <see cref="M:System.IDisposable.Dispose"/> is called.</returns>
+        </member>
+        <member name="M:AlgoSimple.Perfee.Perfee.MeasureGroup(System.String)">
+            <summary>
+            Starts a grouped entry which be closed after the calling <see cref="M:System.IDisposable.Dispose"/> on the returned instance.
+            </summary>
+            <param name="groupName">The group name.</param>
+            <returns>A disposable instance that ends the time measure when <see cref="M:System.IDisposable.Dispose"/> is called.</returns>
+        </member>
+    </members>
+</doc>
