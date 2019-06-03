@@ -13,8 +13,9 @@ Measure individual entries and grouped entries providing some statistics (mean, 
     <RepositoryType>git</RepositoryType>
     <PackageTags>.net time elapsed measurent</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.0.3</Version>
-    <PackageReleaseNotes>Include code comments.</PackageReleaseNotes>
+    <Version>1.1.0</Version>
+    <PackageReleaseNotes>Log still open entries names.
+Cancel a pending entry.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
