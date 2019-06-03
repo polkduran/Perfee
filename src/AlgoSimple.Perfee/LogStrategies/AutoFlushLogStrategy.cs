@@ -54,11 +54,11 @@ namespace AlgoSimple.Perfee.LogStrategies
         public void CloseEntry(PerfId perfId)
         {
             Interlocked.Decrement(ref _level);
-            StartEntry start;
-            if (!_startEntries.TryRemove(perfId, out start))
+            if (!_startEntries.TryRemove(perfId, out var start))
             {
                 return;
             }
+
             var end = new EndEntry(perfId);
             var logEntry = new LogEntry(start, end, start.Level);
             if (!start.IsGroupEntry)
@@ -112,19 +112,7 @@ namespace AlgoSimple.Perfee.LogStrategies
                 return "Autoflush: logs are written as they are created.";
             }
             var start = DateTime.UtcNow;
-            int openSingle = 0, openGrouped = 0;
-            foreach (var startEntry in _startEntries)
-            {
-                if (startEntry.Value.IsGroupEntry)
-                {
-                    openGrouped++;
-                }
-                else
-                {
-                    openSingle++;
-                }
-            }
-            return PerfeeUtils.BuildLogs(openSingle, openGrouped, start, _logEntries, _groupLogEntries.Values);
+            return PerfeeUtils.BuildLogs(_startEntries.Values, start, _logEntries, _groupLogEntries.Values);
         }
 
         public void Reset()

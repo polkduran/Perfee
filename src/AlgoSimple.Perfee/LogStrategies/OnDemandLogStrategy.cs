@@ -73,9 +73,8 @@ namespace AlgoSimple.Perfee.LogStrategies
             lock (_syncReadRoot)
             {
                 var start = DateTime.UtcNow;
-                int singleEntriesOpen, groupEntriesOpen;
-                UpdateLogEntries(out singleEntriesOpen, out groupEntriesOpen);
-                return PerfeeUtils.BuildLogs(singleEntriesOpen, groupEntriesOpen, start, _logEntries, _groupLogEntries.Values);
+                UpdateLogEntries();
+                return PerfeeUtils.BuildLogs(_startEntries, start, _logEntries, _groupLogEntries.Values);
             }
         }
 
@@ -88,10 +87,8 @@ namespace AlgoSimple.Perfee.LogStrategies
             }
         }
 
-        private void UpdateLogEntries(out int singleEntriesOpen, out int groupEntriesOpen)
+        private void UpdateLogEntries()
         {
-            singleEntriesOpen = 0;
-            groupEntriesOpen = 0;
             StartEntry[] startEntries;
             {
                 var tmp = _startEntries;
@@ -108,26 +105,16 @@ namespace AlgoSimple.Perfee.LogStrategies
             for (var i = 0; i < startEntries.Length; i++)
             {
                 var start = startEntries[i];
-                EndEntry end;
-                if (!endEntries.TryGetValue(start.Id, out end))
+                if (!endEntries.TryGetValue(start.Id, out var end))
                 {
                     // not closed yet, put it back
                     _startEntries.TryAdd(start);
-                    if (start.IsGroupEntry)
-                    {
-                        groupEntriesOpen++;
-                    }
-                    else
-                    {
-                        singleEntriesOpen++;
-                    }
                     continue;
                 }
 
                 if (start.IsGroupEntry)
                 {
-                    GroupLogEntry groupLog;
-                    if (!_groupLogEntries.TryGetValue(start.Label, out groupLog))
+                    if (!_groupLogEntries.TryGetValue(start.Label, out var groupLog))
                     {
                         groupLog = new GroupLogEntry(start.Label);
                         _groupLogEntries.Add(groupLog.GroupName, groupLog);

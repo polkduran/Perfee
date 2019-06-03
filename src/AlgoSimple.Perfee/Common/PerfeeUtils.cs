@@ -8,7 +8,7 @@ namespace AlgoSimple.Perfee.Common
 {
     public static class PerfeeUtils
     {
-        public static string BuildLogs(int singleOpenEntries, int groupedOpenEntries, DateTime logsGenerationStartTime, IEnumerable<LogEntry> logEntries, IEnumerable<GroupLogEntry> groupEntries)
+        public static string BuildLogs(IEnumerable<StartEntry> openedEntries, DateTime logsGenerationStartTime, IEnumerable<LogEntry> logEntries, IEnumerable<GroupLogEntry> groupEntries)
         {
             if (Perfee.Configuration.LogElapsedTimeThreshold > TimeSpan.Zero)
             {
@@ -20,21 +20,25 @@ namespace AlgoSimple.Perfee.Common
                 .AppendLine("<--------------- Perfee --------------->")
                 .AppendLine($"  Log elapsed time threshold '{Perfee.Configuration.LogElapsedTimeThreshold}'. ");
 
-            if (singleOpenEntries > 0)
+            var groupedOpenedEntries = openedEntries
+                                        .Select(e => e.IsGroupEntry ? $"[GROUP]{e.Label}" : e.Label)
+                                        .GroupBy(label => label)
+                                        .Aggregate(new StringBuilder(), (b, g) => b.AppendLine($"{g.Key} -> {g.Count()}"));
+
+            if (groupedOpenedEntries.Length > 0)
             {
-                logBuilder.Append($"{singleOpenEntries} single entries still open. ");
+                logBuilder.AppendLine("_______ Opened entries _______");
+                logBuilder.Append(groupedOpenedEntries);
+                logBuilder.AppendLine("_______ /Opened entries _______");
             }
-            if (groupedOpenEntries > 0)
-            {
-                logBuilder.Append($"{groupedOpenEntries} group entries still open. ");
-            }
+
             logBuilder.AppendLine();
 
             foreach (var entry in logEntries)
             {
                 logBuilder.AppendLine(entry.ToString());
             }
-            logBuilder.AppendLine();
+            logBuilder.AppendLine(); 
 
             foreach (var entry in groupEntries)
             {
